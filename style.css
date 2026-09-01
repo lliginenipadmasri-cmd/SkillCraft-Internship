@@ -8,465 +8,359 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     font-family: Arial, sans-serif;
-    color: #1f2937;
-    background: #ffffff;
-    line-height: 1.6;
-}
 
+    min-height: 100vh;
 
-/* ==============================
-   NAVIGATION BAR
-================================ */
+    background:
+        radial-gradient(
+            circle at top left,
+            #581c87,
+            transparent 35%
+        ),
+        #140b24;
 
-#navbar {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 92%;
-    max-width: 1200px;
-
-    z-index: 1000;
-
-    background: rgba(255, 255, 255, 0.96);
-
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 18px;
-
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-
-    backdrop-filter: blur(12px);
-
-    transition: all 0.3s ease;
-}
-
-
-/* Navigation container */
-
-.nav-container {
-    min-height: 72px;
-
-    padding: 0 18px;
+    color: #f8fafc;
 
     display: flex;
-    align-items: center;
-    justify-content: space-between;
 
-    gap: 30px;
+    justify-content: center;
+
+    padding: 40px 20px;
 }
 
 
 /* ==============================
-   BRAND / LOGO
+   MAIN APP
 ================================ */
+
+.stopwatch-app {
+    width: 100%;
+    max-width: 900px;
+}
+
+
+/* ==============================
+   HEADER
+================================ */
+
+.app-header {
+    margin-bottom: 30px;
+}
 
 .brand {
     display: flex;
     align-items: center;
-
-    gap: 10px;
-
-    text-decoration: none;
-
-    flex-shrink: 0;
+    gap: 14px;
 }
 
-.brand-logo {
-    width: 40px;
-    height: 40px;
+.brand-icon {
+    width: 48px;
+    height: 48px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 11px;
+    border-radius: 14px;
 
-    background: #2563eb;
+    background: #9333ea;
 
-    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.25);
+    font-size: 24px;
+
+    box-shadow:
+        0 8px 25px rgba(147, 51, 234, 0.35);
 }
 
-.brand-logo svg {
-    width: 25px;
-    height: 25px;
-
-    fill: none;
-
-    stroke: white;
-
-    stroke-width: 1.8;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.brand-name {
-    font-size: 21px;
-
-    font-weight: 800;
-
+.brand h1 {
+    font-size: 25px;
     letter-spacing: -0.5px;
+}
 
-    color: #111827;
+.brand p {
+    margin-top: 2px;
+
+    color: #c4b5fd;
+
+    font-size: 13px;
 }
 
 
 /* ==============================
-   NAVIGATION LINKS
+   STOPWATCH CARD
 ================================ */
 
-.nav-links {
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    list-style: none;
-}
-
-.nav-item {
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    padding: 10px 14px;
-
-    border-radius: 10px;
-
-    text-decoration: none;
-
-    color: #4b5563;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    transition:
-        background 0.3s ease,
-        color 0.3s ease,
-        transform 0.3s ease;
-}
-
-
-/* Navigation icons */
-
-.nav-item svg {
-    width: 17px;
-    height: 17px;
-
-    fill: none;
-
-    stroke: currentColor;
-
-    stroke-width: 1.8;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-
-/* Hover effect */
-
-.nav-item:hover {
-    background: #eff6ff;
-    color: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.20);
-}
-
-
-/* Active navigation item */
-
-.nav-item.active {
-    background: #2563eb;
-    color: white;
-    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.20);
-}
-
-
-/* ==============================
-   NAVBAR AFTER SCROLLING
-================================ */
-
-#navbar.scrolled {
-    top: 10px;
-
-    background: rgba(17, 24, 39, 0.96);
-
-    border-color: rgba(255, 255, 255, 0.08);
-
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
-}
-
-#navbar.scrolled .brand-name {
-    color: white;
-}
-
-#navbar.scrolled .nav-item {
-    color: #d1d5db;
-}
-
-#navbar.scrolled .nav-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-
-    color: #93c5fd;
-}
-
-#navbar.scrolled .nav-item.active {
-    background: #3b82f6;
-
-    color: white;
-}
-
-
-/* ==============================
-   HERO SECTION
-================================ */
-
-.hero {
-    min-height: 100vh;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
+.stopwatch-card {
+    padding: 50px 30px;
 
     text-align: center;
 
-    padding: 150px 8% 80px;
+    background: rgba(255, 255, 255, 0.06);
 
-    background:
-        linear-gradient(
-            135deg,
-            #111827,
-            #1e3a8a
-        );
+    border: 1px solid rgba(255, 255, 255, 0.1);
 
-    color: white;
+    border-radius: 24px;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25);
 }
 
-.hero-content {
-    max-width: 800px;
-}
 
-.small-heading {
+/* Status */
+
+.status {
+    color: #c4b5fd;
+
     font-size: 14px;
+
+    margin-bottom: 18px;
+}
+
+
+/* ==============================
+   TIME DISPLAY
+================================ */
+
+.time-display {
+    font-family: "Courier New", monospace;
+
+    font-size: clamp(50px, 10vw, 90px);
 
     font-weight: bold;
 
     letter-spacing: 3px;
 
-    margin-bottom: 20px;
+    color: #ffffff;
 
-    color: #93c5fd;
+    margin-bottom: 40px;
 }
 
-.hero h1 {
-    font-size: clamp(40px, 7vw, 75px);
+#milliseconds {
+    color: #d8b4fe;
 
-    line-height: 1.1;
-
-    margin-bottom: 25px;
-}
-
-.hero h1 span {
-    color: #60a5fa;
-}
-
-.hero-text {
-    max-width: 650px;
-
-    margin: 0 auto 35px;
-
-    font-size: 18px;
-
-    color: #dbeafe;
-}
-
-
-/* Hero button */
-
-.hero-button {
-    display: inline-block;
-
-    padding: 14px 28px;
-
-    background: #3b82f6;
-
-    color: white;
-
-    text-decoration: none;
-
-    border-radius: 8px;
-
-    font-weight: bold;
-
-    transition: all 0.3s ease;
-}
-
-.hero-button:hover {
-    background: #2563eb;
-
-    transform: translateY(-3px);
-
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    font-size: 0.55em;
 }
 
 
 /* ==============================
-   GENERAL SECTIONS
+   CONTROLS
 ================================ */
 
-.section {
-    min-height: 60vh;
+.controls {
+    display: flex;
 
-    padding: 100px 8%;
+    justify-content: center;
 
-    text-align: center;
+    flex-wrap: wrap;
 
+    gap: 12px;
+}
+
+.control-btn {
+    border: none;
+
+    padding: 13px 22px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+
+/* Start */
+
+.control-btn.primary {
+    background: #9333ea;
+
+    color: white;
+}
+
+.control-btn.primary:hover {
+    background: #a855f7;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(147, 51, 234, 0.3);
+}
+
+
+/* Secondary buttons */
+
+.control-btn.secondary {
+    background: #3b2a50;
+
+    color: #f8fafc;
+}
+
+.control-btn.secondary:hover:not(:disabled) {
+    background: #51376a;
+
+    transform: translateY(-2px);
+}
+
+
+/* Reset */
+
+.control-btn.reset {
+    background: transparent;
+
+    color: #ddd6fe;
+
+    border: 1px solid #6b4c86;
+}
+
+.control-btn.reset:hover {
+    background: #2e1b3d;
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+
+/* Disabled */
+
+.control-btn:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* ==============================
+   LAP HISTORY
+================================ */
+
+.laps-section {
+    margin-top: 30px;
+
+    padding: 28px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 20px;
+}
+
+.section-heading {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    font-size: 20px;
+}
+
+#lapCount {
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #581c87;
+
+    color: #e9d5ff;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+/* Lap container */
+
+.laps-container {
     display: flex;
 
     flex-direction: column;
 
-    justify-content: center;
-
-    align-items: center;
+    gap: 8px;
 }
 
-.section-label {
-    color: #3b82f6;
+
+/* Individual lap */
+
+.lap-item {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 13px 16px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lap-number {
+    color: #a78bfa;
 
     font-size: 13px;
+}
+
+.lap-time {
+    font-family: "Courier New", monospace;
 
     font-weight: bold;
 
-    letter-spacing: 2px;
-
-    margin-bottom: 12px;
-}
-
-.section h2 {
-    font-size: clamp(30px, 5vw, 48px);
-
-    line-height: 1.2;
-
-    margin-bottom: 20px;
-
-    max-width: 800px;
-}
-
-.section-text {
-    max-width: 650px;
-
-    color: #6b7280;
-
-    font-size: 17px;
+    color: #f3e8ff;
 }
 
 
-/* ==============================
-   SERVICES
-================================ */
+/* Empty state */
 
-.services-section {
-    background: #f8fafc;
+.empty-state {
+    text-align: center;
+
+    padding: 25px;
+
+    color: #8b7aa3;
 }
 
-.service-container {
-    width: 100%;
+.empty-icon {
+    font-size: 28px;
 
-    max-width: 1100px;
-
-    margin-top: 45px;
-
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 25px;
+    margin-bottom: 8px;
 }
 
-.service-card {
-    padding: 35px 25px;
-
-    background: white;
-
-    border-radius: 15px;
-
-    border: 1px solid #e5e7eb;
-
-    transition: all 0.3s ease;
-}
-
-.service-card:hover {
-    transform: translateY(-8px);
-
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-}
-
-.service-card h3 {
-    margin-bottom: 12px;
-
-    font-size: 21px;
-}
-
-.service-card p {
-    color: #6b7280;
+.empty-state p {
+    font-size: 13px;
 }
 
 
 /* ==============================
-   CONTACT
+   FOOTER
 ================================ */
 
-.contact-section {
-    background: #111827;
+footer {
+    text-align: center;
 
-    color: white;
-}
+    padding: 25px 0 10px;
 
-.contact-section .section-text {
-    color: #d1d5db;
+    color: #8b7aa3;
 
-    margin-bottom: 30px;
-}
-
-.contact-section .hero-button {
-    display: inline-block;
-
-    padding: 14px 28px;
-
-    background: #3b82f6;
-
-    color: #ffffff;
-
-    text-decoration: none;
-
-    border-radius: 8px;
-
-    font-weight: 700;
-
-    transition: all 0.3s ease;
-}
-
-.contact-section .hero-button:hover {
-    background: #2563eb;
-
-    color: #ffffff;
-
-    transform: translateY(-3px);
-
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    font-size: 12px;
 }
 
 
@@ -474,68 +368,37 @@ body {
    MOBILE RESPONSIVE
 ================================ */
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
 
-    #navbar {
-        top: 10px;
-
-        width: 94%;
-
-        border-radius: 15px;
+    body {
+        padding: 25px 14px;
     }
 
-    .nav-container {
-        min-height: auto;
-
-        padding: 12px;
-
-        flex-direction: column;
-
-        gap: 10px;
+    .stopwatch-card {
+        padding: 40px 18px;
     }
 
-    .brand {
+    .time-display {
+        letter-spacing: 1px;
+
+        margin-bottom: 30px;
+    }
+
+    .controls {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .control-btn {
         width: 100%;
-
-        justify-content: center;
     }
 
-    .nav-links {
-        width: 100%;
-
-        justify-content: center;
-
-        flex-wrap: wrap;
-
-        gap: 5px;
+    .laps-section {
+        padding: 20px 15px;
     }
 
-    .nav-item {
-        padding: 8px 10px;
-
-        font-size: 13px;
-    }
-
-    .nav-item svg {
-        width: 15px;
-        height: 15px;
-    }
-
-    .hero {
-        padding-left: 5%;
-
-        padding-right: 5%;
-    }
-
-    .hero-text {
-        font-size: 16px;
-    }
-
-    .section {
-        padding: 80px 5%;
-    }
-
-    .service-container {
-        grid-template-columns: 1fr;
+    .brand h1 {
+        font-size: 22px;
     }
 }
