@@ -1,0 +1,491 @@
+/* ==============================
+   BASIC RESET
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            #134e4a,
+            transparent 30%
+        ),
+        #0f1720;
+
+    color: #f8fafc;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+
+/* ==============================
+   MAIN APPLICATION
+================================ */
+
+.quiz-app {
+    width: 100%;
+    max-width: 850px;
+}
+
+
+/* ==============================
+   HEADER
+================================ */
+
+.quiz-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #14b8a6;
+
+    box-shadow:
+        0 8px 25px rgba(20, 184, 166, 0.25);
+}
+
+.brand-icon svg {
+    width: 27px;
+    height: 27px;
+
+    fill: none;
+
+    stroke: white;
+
+    stroke-width: 2.5;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+}
+
+.brand h1 {
+    font-size: 24px;
+
+    letter-spacing: -0.5px;
+}
+
+.brand p {
+    margin-top: 2px;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+}
+
+
+/* Question counter */
+
+.question-counter {
+    padding: 9px 13px;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+#currentQuestion {
+    color: #5eead4;
+}
+
+
+/* ==============================
+   PROGRESS BAR
+================================ */
+
+.progress-container {
+    width: 100%;
+
+    height: 7px;
+
+    background: #1e293b;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin-bottom: 25px;
+}
+
+.progress-bar {
+    width: 20%;
+
+    height: 100%;
+
+    background: #14b8a6;
+
+    border-radius: inherit;
+
+    transition: width 0.3s ease;
+}
+
+
+/* ==============================
+   QUIZ CARD
+================================ */
+
+.quiz-card,
+.result-card {
+    padding: 42px 35px;
+
+    background: rgba(255, 255, 255, 0.055);
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Small label */
+
+.question-label {
+    color: #5eead4;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 13px;
+}
+
+
+/* Question */
+
+.quiz-card h2 {
+    font-size: clamp(25px, 4vw, 36px);
+
+    line-height: 1.35;
+
+    margin-bottom: 30px;
+
+    color: #f8fafc;
+}
+
+
+/* ==============================
+   ANSWER OPTIONS
+================================ */
+
+.options {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-bottom: 28px;
+}
+
+.option {
+    width: 100%;
+
+    padding: 16px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    background: #17212b;
+
+    color: #e2e8f0;
+
+    border: 1px solid #293747;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    font-size: 15px;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.option:hover {
+    background: #1d2b37;
+
+    border-color: #14b8a6;
+
+    transform: translateY(-1px);
+}
+
+
+/* Option number */
+
+.option-number {
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #24313d;
+
+    color: #cbd5e1;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+
+/* Selected option */
+
+.option.selected {
+    background: rgba(20, 184, 166, 0.13);
+
+    border-color: #14b8a6;
+
+    color: #ecfeff;
+}
+
+.option.selected .option-number {
+    background: #14b8a6;
+
+    color: #062a27;
+}
+
+
+/* Correct answer */
+
+.option.correct {
+    background: rgba(34, 197, 94, 0.12);
+
+    border-color: #22c55e;
+
+    color: #dcfce7;
+}
+
+
+/* Wrong answer */
+
+.option.wrong {
+    background: rgba(239, 68, 68, 0.12);
+
+    border-color: #ef4444;
+
+    color: #fee2e2;
+}
+
+
+/* ==============================
+   NEXT BUTTON
+================================ */
+
+.next-btn {
+    width: 100%;
+
+    border: none;
+
+    padding: 15px 20px;
+
+    border-radius: 11px;
+
+    background: #14b8a6;
+
+    color: #062a27;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.next-btn:hover:not(:disabled) {
+    background: #2dd4bf;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(20, 184, 166, 0.2);
+}
+
+.next-btn:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
+
+/* ==============================
+   RESULT CARD
+================================ */
+
+.result-card {
+    text-align: center;
+}
+
+.result-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #14b8a6;
+
+    color: #062a27;
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 10px 25px rgba(20, 184, 166, 0.2);
+}
+
+.result-card h2 {
+    margin-bottom: 18px;
+
+    font-size: 30px;
+}
+
+.score {
+    font-size: clamp(45px, 8vw, 70px);
+
+    font-weight: 800;
+
+    color: #5eead4;
+
+    margin-bottom: 10px;
+}
+
+.result-message {
+    color: #94a3b8;
+
+    margin-bottom: 28px;
+}
+
+
+/* ==============================
+   FOOTER
+================================ */
+
+footer {
+    text-align: center;
+
+    padding: 24px 0 10px;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+/* ==============================
+   MOBILE RESPONSIVE
+================================ */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 25px 14px;
+    }
+
+    .quiz-header {
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .brand h1 {
+        font-size: 21px;
+    }
+
+    .question-counter {
+        font-size: 12px;
+    }
+
+    .quiz-card,
+    .result-card {
+        padding: 30px 18px;
+
+        border-radius: 18px;
+    }
+
+    .quiz-card h2 {
+        font-size: 24px;
+    }
+
+    .option {
+        padding: 14px;
+    }
+
+}

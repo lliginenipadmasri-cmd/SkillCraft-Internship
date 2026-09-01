@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quizora | Quiz Game</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="quiz-app">
+
+        <!-- Quiz Header -->
+        <header class="quiz-header">
+
+            <div class="brand">
+                <div class="brand-icon">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                    <circle cx="24" cy="24" r="18"></circle>
+                    <path d="M17 24L21.5 28.5L31 19"></path>
+                </svg>
+            </div>
+                <div>
+                    <h1>Quizora</h1>
+                    <p>Test Your Knowledge</p>
+                </div>
+            </div>
+
+            <div class="question-counter">
+                <span id="currentQuestion">1</span>
+                /
+                <span id="totalQuestions">5</span>
+            </div>
+
+        </header>
+
+
+        <!-- Progress Bar -->
+
+        <div class="progress-container">
+            <div
+                class="progress-bar"
+                id="progressBar">
+            </div>
+        </div>
+
+
+        <!-- Quiz Card -->
+
+        <section class="quiz-card">
+
+            <p class="question-label">
+                QUESTION
+            </p>
+
+            <h2 id="question">
+                Question will appear here
+            </h2>
+
+
+            <!-- Answer Options -->
+
+            <div
+                class="options"
+                id="options">
+            </div>
+
+
+            <!-- Next Button -->
+
+            <button
+                id="nextBtn"
+                class="next-btn"
+                disabled>
+                Next Question →
+            </button>
+
+        </section>
+
+
+        <!-- Result -->
+
+        <section
+            class="result-card"
+            id="resultCard"
+            hidden>
+
+            <div class="result-icon">
+                ✓
+            </div>
+
+            <p class="question-label">
+                QUIZ COMPLETED
+            </p>
+
+            <h2>Your Final Score</h2>
+
+            <div class="score" id="score">
+                0 / 5
+            </div>
+
+            <p
+                class="result-message"
+                id="resultMessage">
+                Good effort!
+            </p>
+
+            <button
+                id="restartBtn"
+                class="next-btn">
+                Play Again
+            </button>
+
+        </section>
+
+
+        <footer>
+            Quizora • SkillCraft Technology Internship
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
