@@ -1,223 +1,456 @@
-// ==============================
+// ========================================
 // GET HTML ELEMENTS
-// ==============================
+// ========================================
 
-const display = document.getElementById("display");
-const millisecondsDisplay = document.getElementById("milliseconds");
+const taskForm = document.getElementById("taskForm");
+const taskInput = document.getElementById("taskInput");
+const taskDate = document.getElementById("taskDate");
+const taskTime = document.getElementById("taskTime");
 
-const startBtn = document.getElementById("startBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const lapBtn = document.getElementById("lapBtn");
-const resetBtn = document.getElementById("resetBtn");
-
-const status = document.getElementById("status");
-const lapsContainer = document.getElementById("lapsContainer");
-const lapCount = document.getElementById("lapCount");
+const taskList = document.getElementById("taskList");
+const taskCount = document.getElementById("taskCount");
 
 
-// ==============================
-// STOPWATCH VARIABLES
-// ==============================
+// ========================================
+// TASK DATA
+// ========================================
 
-let startTime = 0;
-let elapsedTime = 0;
-let timerInterval = null;
+let tasks = [];
 
-let lapNumber = 0;
+let editingTaskId = null;
 
 
-// ==============================
-// FORMAT TIME
-// ==============================
+// ========================================
+// LOAD SAVED TASKS
+// ========================================
 
-function formatTime(time) {
+function loadTasks() {
 
-    const hours = Math.floor(time / 3600000);
+    const savedTasks = localStorage.getItem("taskflowTasks");
 
-    const minutes = Math.floor(
-        (time % 3600000) / 60000
-    );
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+    }
 
-    const seconds = Math.floor(
-        (time % 60000) / 1000
-    );
-
-    const milliseconds = Math.floor(
-        (time % 1000) / 10
-    );
-
-    return {
-        hours: String(hours).padStart(2, "0"),
-        minutes: String(minutes).padStart(2, "0"),
-        seconds: String(seconds).padStart(2, "0"),
-        milliseconds: String(milliseconds).padStart(2, "0")
-    };
 }
 
 
-// ==============================
-// UPDATE DISPLAY
-// ==============================
+// ========================================
+// SAVE TASKS
+// ========================================
 
-function updateDisplay() {
+function saveTasks() {
 
-    const time = formatTime(elapsedTime);
+    localStorage.setItem(
+        "taskflowTasks",
+        JSON.stringify(tasks)
+    );
 
-    display.childNodes[0].nodeValue =
-        `${time.hours}:${time.minutes}:${time.seconds}`;
-
-    millisecondsDisplay.textContent =
-        `.${time.milliseconds}`;
 }
 
 
-// ==============================
-// START
-// ==============================
+// ========================================
+// UPDATE TASK COUNT
+// ========================================
 
-startBtn.addEventListener("click", function () {
+function updateTaskCount() {
 
-    startTime = Date.now() - elapsedTime;
+    const count = tasks.length;
 
-    timerInterval = setInterval(function () {
+    taskCount.textContent =
+        `${count} ${count === 1 ? "Task" : "Tasks"}`;
 
-        elapsedTime = Date.now() - startTime;
-
-        updateDisplay();
-
-    }, 10);
+}
 
 
-    startBtn.disabled = true;
+// ========================================
+// FORMAT DATE
+// ========================================
 
-    pauseBtn.disabled = false;
+function formatDate(dateValue) {
 
-    lapBtn.disabled = false;
+    const date = new Date(dateValue + "T00:00:00");
 
-    status.textContent = "Stopwatch running";
-});
+    return date.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
 
-
-// ==============================
-// PAUSE
-// ==============================
-
-pauseBtn.addEventListener("click", function () {
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-
-    startBtn.disabled = false;
-
-    pauseBtn.disabled = true;
-
-    lapBtn.disabled = true;
-
-    status.textContent = "Stopwatch paused";
-});
+}
 
 
-// ==============================
-// RESET
-// ==============================
+// ========================================
+// CREATE TASK ELEMENT
+// ========================================
 
-resetBtn.addEventListener("click", function () {
+function createTaskElement(task) {
 
-    clearInterval(timerInterval);
+    const taskItem = document.createElement("div");
 
-    timerInterval = null;
-
-    startTime = 0;
-
-    elapsedTime = 0;
-
-    lapNumber = 0;
-
-    updateDisplay();
-
-    startBtn.disabled = false;
-
-    pauseBtn.disabled = true;
-
-    lapBtn.disabled = true;
-
-    status.textContent = "Ready to start";
-
-    lapsContainer.innerHTML = `
-        <div class="empty-state">
-            <div class="empty-icon">🏁</div>
-
-            <p>
-                Your lap times will appear here.
-            </p>
-        </div>
-    `;
-
-    lapCount.textContent = "0 Laps";
-});
+    taskItem.className = "task-item";
 
 
-// ==============================
-// LAP
-// ==============================
+    if (task.completed) {
+        taskItem.classList.add("completed");
+    }
 
-lapBtn.addEventListener("click", function () {
 
-    if (!timerInterval) {
+    // Task information
+
+    const taskInfo = document.createElement("div");
+
+    taskInfo.className = "task-info";
+
+
+    const taskTitle = document.createElement("div");
+
+    taskTitle.className = "task-title";
+
+    taskTitle.textContent = task.title;
+
+
+    const taskMeta = document.createElement("div");
+
+    taskMeta.className = "task-meta";
+
+    taskMeta.textContent =
+        `${formatDate(task.date)} • ${task.time}`;
+
+
+    taskInfo.appendChild(taskTitle);
+
+    taskInfo.appendChild(taskMeta);
+
+
+    // Task actions
+
+    const taskActions = document.createElement("div");
+
+    taskActions.className = "task-actions";
+
+
+    // Complete button
+
+    const completeButton =
+        document.createElement("button");
+
+    completeButton.className =
+        "task-action complete-btn";
+
+    completeButton.textContent =
+        task.completed ? "Undo" : "✓ Complete";
+
+
+    completeButton.addEventListener(
+        "click",
+        function () {
+
+            toggleTask(task.id);
+
+        }
+    );
+
+
+    // Edit button
+
+    const editButton =
+        document.createElement("button");
+
+    editButton.className =
+        "task-action edit-btn";
+
+    editButton.textContent = "Edit";
+
+
+    editButton.addEventListener(
+        "click",
+        function () {
+
+            editTask(task.id);
+
+        }
+    );
+
+
+    taskActions.appendChild(completeButton);
+
+    taskActions.appendChild(editButton);
+
+
+    taskItem.appendChild(taskInfo);
+
+    taskItem.appendChild(taskActions);
+
+
+    return taskItem;
+
+}
+
+
+// ========================================
+// DISPLAY TASKS
+// ========================================
+
+function renderTasks() {
+
+    taskList.innerHTML = "";
+
+
+    if (tasks.length === 0) {
+
+        taskList.innerHTML = `
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ✓
+                </div>
+
+                <h3>No tasks yet</h3>
+
+                <p>
+                    Add your first task to get started.
+                </p>
+
+            </div>
+        `;
+
+        updateTaskCount();
+
+        return;
+
+    }
+
+
+    // Sort tasks by date and time
+
+    tasks.sort(function (a, b) {
+
+        const first =
+            new Date(`${a.date}T${a.time}`);
+
+        const second =
+            new Date(`${b.date}T${b.time}`);
+
+        return first - second;
+
+    });
+
+
+    tasks.forEach(function (task) {
+
+        const taskElement =
+            createTaskElement(task);
+
+        taskList.appendChild(taskElement);
+
+    });
+
+
+    updateTaskCount();
+
+}
+
+
+// ========================================
+// ADD TASK
+// ========================================
+
+taskForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+
+        const title =
+            taskInput.value.trim();
+
+        const date =
+            taskDate.value;
+
+        const time =
+            taskTime.value;
+
+
+        // Check input
+
+        if (title === "") {
+
+            alert("Please enter a task.");
+
+            taskInput.focus();
+
+            return;
+
+        }
+
+
+        if (date === "") {
+
+            alert("Please select a date.");
+
+            taskDate.focus();
+
+            return;
+
+        }
+
+
+        if (time === "") {
+
+            alert("Please select a time.");
+
+            taskTime.focus();
+
+            return;
+
+        }
+
+
+        // UPDATE EXISTING TASK
+
+        if (editingTaskId !== null) {
+
+            tasks = tasks.map(function (task) {
+
+                if (task.id === editingTaskId) {
+
+                    return {
+                        id: task.id,
+                        title: title,
+                        date: date,
+                        time: time,
+                        completed: task.completed
+                    };
+
+                }
+
+                return task;
+
+            });
+
+
+            editingTaskId = null;
+
+
+            const button =
+                document.querySelector(".add-task-btn");
+
+            button.innerHTML =
+                "<span>+</span> Add Task";
+
+        }
+
+
+        // ADD NEW TASK
+
+        else {
+
+            const newTask = {
+
+                id: Date.now(),
+
+                title: title,
+
+                date: date,
+
+                time: time,
+
+                completed: false
+
+            };
+
+
+            tasks.push(newTask);
+
+        }
+
+
+        saveTasks();
+
+        renderTasks();
+
+        taskForm.reset();
+
+        taskInput.focus();
+
+    }
+);
+
+
+// ========================================
+// COMPLETE / UNDO
+// ========================================
+
+function toggleTask(id) {
+
+    tasks = tasks.map(function (task) {
+
+        if (task.id === id) {
+
+            task.completed =
+                !task.completed;
+
+        }
+
+        return task;
+
+    });
+
+
+    saveTasks();
+
+    renderTasks();
+
+}
+
+
+// ========================================
+// EDIT TASK
+// ========================================
+
+function editTask(id) {
+
+    const task =
+        tasks.find(function (task) {
+
+            return task.id === id;
+
+        });
+
+
+    if (!task) {
         return;
     }
 
-    lapNumber++;
 
-    const time = formatTime(elapsedTime);
+    taskInput.value = task.title;
 
-    const lapTime =
-        `${time.hours}:${time.minutes}:${time.seconds}.${time.milliseconds}`;
+    taskDate.value = task.date;
 
-
-    // Remove empty message
-
-    const emptyState =
-        lapsContainer.querySelector(".empty-state");
-
-    if (emptyState) {
-        emptyState.remove();
-    }
+    taskTime.value = task.time;
 
 
-    // Create lap
-
-    const lapItem =
-        document.createElement("div");
-
-    lapItem.className = "lap-item";
-
-    lapItem.innerHTML = `
-        <span class="lap-number">
-            Lap ${lapNumber}
-        </span>
-
-        <span class="lap-time">
-            ${lapTime}
-        </span>
-    `;
+    editingTaskId = id;
 
 
-    // Add newest lap to the top
+    const button =
+        document.querySelector(".add-task-btn");
 
-    lapsContainer.prepend(lapItem);
-
-
-    // Update counter
-
-    lapCount.textContent =
-        `${lapNumber} ${lapNumber === 1 ? "Lap" : "Laps"}`;
-});
+    button.innerHTML =
+        "<span>✓</span> Update Task";
 
 
-// ==============================
-// INITIAL DISPLAY
-// ==============================
+    taskInput.focus();
 
-updateDisplay();
+}
+
+
+// ========================================
+// INITIALIZE APPLICATION
+// ========================================
+
+loadTasks();
+
+renderTasks();

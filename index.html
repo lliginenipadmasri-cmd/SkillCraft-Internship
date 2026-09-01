@@ -4,108 +4,149 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <title>ChronoX | Stopwatch</title>
+    <title>TaskFlow | To-Do Web App</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <main class="stopwatch-app">
+    <main class="app">
 
         <!-- Header -->
-
         <header class="app-header">
 
             <div class="brand">
-                <div class="brand-icon">
-                    ⏱
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9 11L11 13L15 9"></path>
+                        <path d="M20 12A8 8 0 1 1 12 4"></path>
+                    </svg>
                 </div>
 
                 <div>
-                    <h1>ChronoX</h1>
-                    <p>Precision Stopwatch</p>
+                    <h1>TaskFlow</h1>
+                    <p>Organize your day with clarity</p>
                 </div>
             </div>
 
         </header>
 
 
-        <!-- Stopwatch -->
+        <!-- Add Task Section -->
+        <section class="task-form-section">
 
-        <section class="stopwatch-card">
+            <div class="section-title">
+                <p class="section-label">ADD TASK</p>
 
-            <p class="status" id="status">
-                Ready to start
-            </p>
-
-            <div class="time-display" id="display">
-                00:00:00
-                <span id="milliseconds">.00</span>
+                <h2>What needs to be done?</h2>
             </div>
 
 
-            <!-- Controls -->
+            <form id="taskForm">
 
-            <div class="controls">
+                <div class="input-group">
+
+                    <label for="taskInput">
+                        Task
+                    </label>
+
+                    <input
+                        type="text"
+                        id="taskInput"
+                        placeholder="Enter your task..."
+                        required>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="input-group">
+
+                        <label for="taskDate">
+                            Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="taskDate"
+                            required>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="taskTime">
+                            Time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="taskTime"
+                            required>
+
+                    </div>
+
+                </div>
+
 
                 <button
-                    id="startBtn"
-                    class="control-btn primary">
-                    ▶ Start
+                    type="submit"
+                    class="add-task-btn">
+
+                    <span>+</span>
+                    Add Task
+
                 </button>
 
-                <button
-                    id="pauseBtn"
-                    class="control-btn secondary"
-                    disabled>
-                    ⏸ Pause
-                </button>
-
-                <button
-                    id="lapBtn"
-                    class="control-btn secondary"
-                    disabled>
-                    🏁 Lap
-                </button>
-
-                <button
-                    id="resetBtn"
-                    class="control-btn reset">
-                    ↻ Reset
-                </button>
-
-            </div>
+            </form>
 
         </section>
 
 
-        <!-- Lap History -->
+        <!-- Task List Section -->
+        <section class="tasks-section">
 
-        <section class="laps-section">
+            <div class="tasks-header">
 
-            <div class="section-heading">
+                <div>
+                    <p class="section-label">
+                        YOUR TASKS
+                    </p>
 
-                <h2>Lap History</h2>
+                    <h2>Task List</h2>
+                </div>
 
-                <span id="lapCount">
-                    0 Laps
+                <span id="taskCount">
+                    0 Tasks
                 </span>
 
             </div>
 
+
+            <!-- Tasks appear here -->
             <div
-                id="lapsContainer"
-                class="laps-container">
+                id="taskList"
+                class="task-list">
 
                 <div class="empty-state">
-                    <div class="empty-icon">🏁</div>
+
+                    <div class="empty-icon">
+                        ✓
+                    </div>
+
+                    <h3>No tasks yet</h3>
 
                     <p>
-                        Your lap times will appear here.
+                        Add your first task to get started.
                     </p>
+
                 </div>
 
             </div>
@@ -113,8 +154,9 @@
         </section>
 
 
+        <!-- Footer -->
         <footer>
-            <p>ChronoX Stopwatch • SkillCraft Technology Internship</p>
+            TaskFlow • SkillCraft Technology Internship
         </footer>
 
     </main>
